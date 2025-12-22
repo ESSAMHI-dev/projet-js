@@ -31,7 +31,7 @@ const SideMenu = ({ activeMenu }) => {
           <img
             src={user.profileImageUrl || ""}
             alt="Profile Image"
-            className="w-20 h-20 bg-slate-400 rounded-full"
+            className="w-20 h-30 bg-slate-400 rounded-lg"
           />
         ) : (
           <CharAvatar

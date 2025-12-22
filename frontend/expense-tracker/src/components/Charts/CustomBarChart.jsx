@@ -42,10 +42,10 @@ const CustomBarChart = ({ data }) => {
           <CartesianGrid stroke="none" />
           <XAxis
             dataKey="month"
-            tick={{ fontSize: 12, fill: "#555" }}
+            tick={{ fontSize: 12, fill: "#aba7a7" }}
             stroke="none"
           />
-          <YAxis tick={{ fontSize: 12, fill: "#555" }} stroke="none" />
+          <YAxis tick={{ fontSize: 12, fill: "#aba7a7" }} stroke="none" />
           <Tooltip content={CustomTooltip} />
 
           <Bar
