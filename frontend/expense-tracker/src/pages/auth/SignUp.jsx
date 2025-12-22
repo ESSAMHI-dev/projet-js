@@ -6,7 +6,7 @@ import { validateEmail } from "../../utils/helper";
 import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import { UserContext } from "../../context/userContext";
+import { UserContext } from "../../context/UserContext";
 import uploadImage from "../../utils/uploadImage";
 
 const SignUp = () => {
@@ -76,8 +76,8 @@ const SignUp = () => {
   return (
     <AuthLayout>
       <div className="lg-w[100%] h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black ">Create an account</h3>
-        <p className="text-xs text-slate-700 mt-[5px] mb-6">
+        <h3 className="text-xl font-semibold text-black dark:text-white">Create an account</h3>
+        <p className="text-xs text-slate-700 dark:text-slate-400 mt-[5px] mb-6">
           Join us today by entering your details below.
         </p>
         <form onSubmit={handleSignUp}>
@@ -116,7 +116,7 @@ const SignUp = () => {
           <button type="submit" className="btn-primary">
             SIGN UP
           </button>
-          <p className="text-[13px] text-slate-800">
+          <p className="text-[13px] text-slate-800 dark:text-slate-300">
             Already have an account?{" "}
             <Link className="font-medium text-primary underline" to="/login">
               Login

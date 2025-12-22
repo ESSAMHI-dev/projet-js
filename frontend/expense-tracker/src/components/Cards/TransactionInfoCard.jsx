@@ -21,8 +21,8 @@ const TransactionInfoCard = ({
   }
 
   return (
-    <div className="group relative flex items-center gap-4 mt-2 p-3 rounded-lg hover:bg-gray-100/60">
-      <div className="w-12 h-12 flex items-center justify-center text-xl text-gray-800 bg-gray-100 rounded-full">
+    <div className="group relative flex items-center gap-4 mt-2 p-3 rounded-lg hover:bg-gray-100/60 dark:hover:bg-slate-700/50">
+      <div className="w-12 h-12 flex items-center justify-center text-xl text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-slate-700 rounded-full">
         {icon ? (
           <img src={icon} alt={title} className="w-6 h-6" />
         ) : (
@@ -32,13 +32,13 @@ const TransactionInfoCard = ({
 
       <div className="flex-1 flex items-center justify-between">
         <div>
-          <p className="text-sm text-gray-700 font-medium">{title}</p>
-          <p className="text-xs text-gray-400 mt-1">{date}</p>
+          <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">{title}</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{date}</p>
         </div>
 
         <div className="flex items-center gap-2">
           {!hideDeleteBtn && (
-            <button className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" onClick={onDelete}>
+            <button className="text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" onClick={onDelete}>
               <LuTrash2 size={18} />
             </button>
           )}

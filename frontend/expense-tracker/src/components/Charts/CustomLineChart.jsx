@@ -13,13 +13,13 @@ const CustomLineChart = ({ data }) => {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white shadow-md rounded-lg p-2 border border-gray-300">
-          <p className="text-xs font-semibold text-purple-800 mb-1">
-            {payload[0].payload.category}
+        <div className="bg-white dark:bg-slate-800 shadow-md rounded-lg p-2 border border-gray-300 dark:border-slate-600">
+          <p className="text-xs font-semibold text-purple-800 dark:text-purple-400 mb-1">
+            {payload[0].payload.date}
           </p>
-          <p className="text-sm text-gray-600">
-            Amount:{" "}
-            <span className="text-sm font-medium text-gray-900">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Expense:{" "}
+            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
               ${payload[0].payload.amount}
             </span>
           </p>
@@ -29,7 +29,7 @@ const CustomLineChart = ({ data }) => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-transparent">
     <ResponsiveContainer width="100%" height={300}>
       <AreaChart data={data}>
         <defs>

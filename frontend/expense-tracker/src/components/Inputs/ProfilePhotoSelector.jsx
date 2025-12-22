@@ -35,8 +35,8 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
       />
 
       {!image ? (
-        <div className="w-20 h-20 flex items-center justify-center bg-purple-100 rounded-full relative">
-          <LuUser className="text-4xl text-primary" />
+        <div className="w-20 h-20 flex items-center justify-center bg-purple-100 dark:bg-purple-900/30 rounded-full relative">
+          <LuUser className="text-4xl text-primary dark:text-purple-400" />
 
           <button
             type="button"
