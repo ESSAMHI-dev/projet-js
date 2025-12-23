@@ -9,6 +9,7 @@ import AddIncomeForm from "../../components/Income/AddIncomeForm";
 import toast from "react-hot-toast";
 import IncomeList from "../../components/Income/IncomeList";
 import DeleteAlert from "../../components/DeleteAlert";
+import UpdateIncomeForm from "../../components/Income/UpdateIncomeForm";
 
 const Income = () => {
   useUserAuth();
@@ -92,6 +93,25 @@ const Income = () => {
     }
   };
 
+  //Update Income
+  const handleUpdateIncome = async(income) => {
+    try {
+      const { _id, source, amount, date, icon } = income;
+      await axiosInstance.put(`${API_PATHS.INCOME.UPDATE_INCOME(_id)}`, {
+        source,
+        amount,
+        date,
+        icon,
+      });
+      setOpenUpdateIncomeModal(false);
+      toast.success("Income updated successfully");
+      fetchIncomeDetails();
+    } catch (error) {
+      toast.error("Failed to update income. Please try again.");
+      console.error("Error updating income:", error);
+    }
+  }
+
   //Handle downlaod income details
   const handleDownloadIncomeDetails = async () => {
     try {
@@ -122,6 +142,9 @@ const Income = () => {
     return () => {};
   }, []);
 
+  const [openUpdateIncomeModal, setOpenUpdateIncomeModal] = useState(false);
+  const [selectedIncome, setSelectedIncome] = useState(null);
+
   return (
     <DashboardLayout activeMenu="Income">
       <div className="my-5 mx-auto">
@@ -139,6 +162,10 @@ const Income = () => {
               setOpenDeleteAlert({ show: true, data: id });
             }}
             onDownload={handleDownloadIncomeDetails}
+            onUpdate={(id) => {
+              setSelectedIncome(incomeData.find(income => income._id === id));
+              setOpenUpdateIncomeModal(true);
+            }}
           />
         </div>
 
@@ -148,6 +175,14 @@ const Income = () => {
           onClose={() => setOpenAddIncomeModal(false)}
         >
           <AddIncomeForm onAddIncome={handleAddIncome} />
+        </Modal>
+
+        <Modal
+          isOpen={openUpdateIncomeModal}
+          onClose={() => setOpenUpdateIncomeModal(false)}
+          title="Update Income"
+        >
+          <UpdateIncomeForm onUpdate={handleUpdateIncome} income={selectedIncome} />
         </Modal>
 
         <Modal

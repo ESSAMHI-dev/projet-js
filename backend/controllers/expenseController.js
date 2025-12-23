@@ -17,7 +17,7 @@ exports.addExpense = async (req, res) => {
       icon,
       category,
       amount,
-      date : new Date(date),
+      date: new Date(date),
     });
     await newExpense.save();
     return res.status(200).json(newExpense);
@@ -41,16 +41,44 @@ exports.getAllExpense = async (req, res) => {
 exports.getExpense = async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
-    
+
     if (!expense) {
-      return res.status(404).json({ success: false, message: "Expense not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Expense not found" });
     }
 
     // Check ownership
     if (expense.userId.toString() !== req.user.id) {
-      return res.status(403).json({ success: false, message: "Not authorized to access this expense" });
+      return res
+        .status(403)
+        .json({
+          success: false,
+          message: "Not authorized to access this expense",
+        });
     }
 
+    return res.status(200).json({ success: true, data: expense });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+//Update expense source
+exports.updateExpense = async (req, res) => {
+  try {
+    const expense = await Expense.findById(req.params.id);
+    if (!expense) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Expense not found" });
+    }
+    const { icon, category, amount, date } = req.body;
+    expense.icon = icon || expense.icon;
+    expense.category = category || expense.category;
+    expense.amount = amount || expense.amount;
+    expense.date = date ? new Date(date) : expense.date;
+    await expense.save();
     return res.status(200).json({ success: true, data: expense });
   } catch (error) {
     return res.status(500).json({ success: false, message: "Server Error" });
@@ -63,12 +91,19 @@ exports.deleteExpense = async (req, res) => {
     const expense = await Expense.findById(req.params.id);
 
     if (!expense) {
-      return res.status(404).json({ success: false, message: "Expense not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Expense not found" });
     }
 
     // Check ownership
     if (expense.userId.toString() !== req.user.id) {
-      return res.status(403).json({ success: false, message: "Not authorized to delete this expense" });
+      return res
+        .status(403)
+        .json({
+          success: false,
+          message: "Not authorized to delete this expense",
+        });
     }
 
     await Expense.findByIdAndDelete(req.params.id);

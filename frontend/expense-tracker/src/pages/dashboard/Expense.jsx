@@ -9,6 +9,7 @@ import AddExpenseForm from "../../components/Expense/AddExpenseForm";
 import Modal from "../../components/Modal";
 import ExpenseList from "../../components/Expense/ExpenseList";
 import DeleteAlert from "../../components/DeleteAlert";
+import UpdateExpenseForm from "../../components/Expense/UpdateExpenseForm";
 
 const Expense = () => {
   useUserAuth();
@@ -21,6 +22,7 @@ const Expense = () => {
   });
 
   const [openAddExpenseModal, setOpenAddExpenseModal] = useState(false);
+  const [openUpdateExpenseModal, setOpenUpdateExpenseModal] = useState(false);
 
   //Get all expense details
   const fetchExpenseDetails = async () => {
@@ -92,6 +94,25 @@ const Expense = () => {
     }
   };
 
+  //Handle Update Expense
+  const handleUpdateExpense = async (expense) => {
+    const { _id, category, amount, date, icon } = expense;
+    try {
+      await axiosInstance.put(API_PATHS.EXPENSE.UPDATE_EXPENSE(_id), {
+        category,
+        amount,
+        date,
+        icon,
+      });
+      setOpenUpdateExpenseModal(false);
+      toast.success("Expense updated successfully");
+      fetchExpenseDetails();
+    } catch (error) {
+      console.error("Error updating expense:", error);
+      toast.error("Failed to update expense. Please try again.");
+    }
+  };
+
   //Handle downlaod expense details
   const handleDownloadExpenseDetails = async () => {
     try {
@@ -122,6 +143,8 @@ const Expense = () => {
     return () => {};
   }, []);
 
+  const [selectedExpense, setSelectedExpense] = useState(null);
+
   return (
     <DashboardLayout activeMenu="Expense">
       <div className="my-5 mx-auto">
@@ -138,6 +161,11 @@ const Expense = () => {
             onDelete={(id) => {
               setOpenDeleteAlert({ show: true, data: id });
             }}
+            onUpdate={(id) => {
+              const expense = expenseData.find(exp => exp._id === id);
+              setSelectedExpense(expense);
+              setOpenUpdateExpenseModal(true);
+            }}
             onDownload={handleDownloadExpenseDetails}
           />
         </div>
@@ -148,6 +176,14 @@ const Expense = () => {
           title="Add Expense"
         >
           <AddExpenseForm onAddExpense={handleAddExpense} />
+        </Modal>
+
+        <Modal
+          isOpen={openUpdateExpenseModal}
+          onClose={() => setOpenUpdateExpenseModal(false)}
+          title="Update Expense"
+        >
+          <UpdateExpenseForm onUpdate={handleUpdateExpense} expense={selectedExpense} />
         </Modal>
 
         <Modal
