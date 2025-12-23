@@ -1,8 +1,11 @@
+import { path } from "framer-motion/client";
 import {
   LuLayoutDashboard,
   LuHandCoins,
   LuWalletMinimal,
   LuLogOut,
+  LuBookOpen,
+  LuPersonStanding
 } from "react-icons/lu";
 
 export const SIDE_MENU_DATA = [
@@ -26,6 +29,18 @@ export const SIDE_MENU_DATA = [
   },
   {
     id: "04",
+    label: "Reports",
+    icon: LuBookOpen,
+    path: "/reports",
+  },
+  {
+    id: "05",
+    label: "Profile",
+    icon: LuPersonStanding,
+    path: "/profile",
+  },
+  {
+    id: "06",
     label: "Logout",
     icon: LuLogOut,
     path: "logout",
