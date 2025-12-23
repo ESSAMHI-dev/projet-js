@@ -78,3 +78,41 @@ exports.getUserInfo = async (req, res) => {
    }
 };
 
+exports.updateUser = async (req, res) => {
+  const { fullName, email, password } = req.body;
+
+  try {
+    console.log('Update request received:', { fullName, email, hasPassword: !!password });
+    
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+    
+    if (fullName) user.fullName = fullName;
+    if (email) user.email = email;
+    if (password) user.password = password;
+    
+    await user.save();
+    
+    console.log('User updated successfully');
+
+    // Return user without password
+    const userResponse = await User.findById(req.user.id).select('-password');
+    res.status(200).json({ user: userResponse });
+  } catch (error) {
+    console.error('Update error:', error);
+    res.status(500).json({ message: "Error updating user", error: error.message });
+  } 
+};
+
+exports.deleteUser = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.user.id);
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error deleting user", error: error.message });
+  }
+}
+
