@@ -39,12 +39,12 @@ const TransactionInfoCard = ({
 
         <div className="flex items-center gap-2">
           {!hideDeleteBtn && (
-            <button className="text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" onClick={onDelete}>
+            <button className="text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 opacity-30 group-hover:opacity-100 transition-opacity cursor-pointer" onClick={onDelete}>
               <LuTrash2 size={18} />
             </button>
           )}
           {!hideDeleteBtn && (
-            <button className="text-gray-400 dark:text-gray-500 hover:text-purple-500 dark:hover:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" onClick={onUpdate}>
+            <button className="text-gray-400 dark:text-gray-500 hover:text-purple-500 dark:hover:text-purple-400 opacity-30 group-hover:opacity-100 transition-opacity cursor-pointer" onClick={onUpdate}>
               <LuPencil size={18} />
             </button>
           )}
