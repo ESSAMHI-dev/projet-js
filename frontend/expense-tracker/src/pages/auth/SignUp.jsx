@@ -7,10 +7,8 @@ import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import { UserContext } from "../../context/UserContext";
-import uploadImage from "../../utils/uploadImage";
 
 const SignUp = () => {
-  const [profilePic, setProfilePic] = useState(null);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +20,6 @@ const SignUp = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    let profileImageUrl = "";
 
     if (!fullName) {
       setError("Please enter your full name.");
@@ -45,17 +42,11 @@ const SignUp = () => {
     //Signup API call
 
     try {
-      //Upload profile picture if exists
-      if (profilePic) {
-        const imgUploadRes = await uploadImage(profilePic);
-        profileImageUrl = imgUploadRes.imageUrl || "";
-      };
 
       const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
         fullName,
         email,
         password,
-        profileImageUrl,
       });
 
       const { token, user } = response.data;
@@ -81,8 +72,6 @@ const SignUp = () => {
           Join us today by entering your details below.
         </p>
         <form onSubmit={handleSignUp}>
-          <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
               value={fullName}
@@ -108,6 +97,7 @@ const SignUp = () => {
                 type="password"
                 placeholder="min 8 Characters"
               />
+              
             </div>
           </div>
 

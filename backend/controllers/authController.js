@@ -9,7 +9,7 @@ const generateToken = (id) => {
 };
 
 exports.registerUser = async (req, res) => {
-  const { fullName, email, password, profileImageUrl } = req.body;
+  const { fullName, email, password } = req.body;
 
   // validation
   if (!fullName || !email || !password) {
@@ -28,7 +28,6 @@ exports.registerUser = async (req, res) => {
       fullName,
       email,
       password,
-      profileImageUrl,
     });
 
     res.status(201).json({
