@@ -37,13 +37,73 @@ exports.getAllIncome = async (req, res) => {
   }
 };
 
+//Get single income
+exports.getIncome = async (req, res) => {
+  try {
+    const income = await Income.findById(req.params.id);
+    
+    if (!income) {
+      return res.status(404).json({ success: false, message: "Income not found" });
+    }
+
+    // Check ownership
+    if (income.userId.toString() !== req.user.id) {
+      return res.status(403).json({ success: false, message: "Not authorized to access this income" });
+    }
+
+    return res.status(200).json({ success: true, data: income });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+//Update income
+exports.updateIncome = async (req, res) => {
+  try {
+    const income = await Income.findById(req.params.id);
+
+    if (!income) {
+      return res.status(404).json({ success: false, message: "Income not found" });
+    }
+
+    // Check ownership
+    if (income.userId.toString() !== req.user.id) {
+      return res.status(403).json({ success: false, message: "Not authorized to update this income" });
+    }
+
+    const { icon, source, amount, date } = req.body;
+
+    if (icon !== undefined) income.icon = icon;
+    if (source) income.source = source;
+    if (amount) income.amount = amount;
+    if (date) income.date = new Date(date);
+
+    await income.save();
+
+    return res.status(200).json({ success: true, data: income, message: "Income updated successfully" });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
 //Delete income source
 exports.deleteIncome = async (req, res) => {
   try {
+    const income = await Income.findById(req.params.id);
+
+    if (!income) {
+      return res.status(404).json({ success: false, message: "Income not found" });
+    }
+
+    // Check ownership
+    if (income.userId.toString() !== req.user.id) {
+      return res.status(403).json({ success: false, message: "Not authorized to delete this income" });
+    }
+
     await Income.findByIdAndDelete(req.params.id);
-    res.json({ message: "Income deleted successfully" });
+    res.json({ success: true, message: "Income deleted successfully" });
   } catch (error) {
-    return res.status(500).json({ message: "Server Error" });
+    return res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 

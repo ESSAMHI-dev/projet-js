@@ -7,6 +7,10 @@ const authRoutes = require("./routes/authRoutes");
 const incomeRoutes = require("./routes/incomeRoutes");
 const expenseRoutes = require("./routes/expensesRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
+const budgetRoutes = require("./routes/budgetRoutes");
+const recurringRoutes = require("./routes/recurringRoutes");
+const { errorHandler, notFound } = require("./middleware/errorMiddleware");
 
 
 const app = express();
@@ -26,10 +30,16 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/income", incomeRoutes);
 app.use("/api/v1/expense", expenseRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
+app.use("/api/v1/categories", categoryRoutes);
+app.use("/api/v1/budgets", budgetRoutes);
+app.use("/api/v1/recurring", recurringRoutes);
 
 // Serve static files from the uploads directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Error handlers (should be last)
+app.use(notFound);
+app.use(errorHandler);
 
 
 const port = process.env.PORT || 5000;

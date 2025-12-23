@@ -37,13 +37,73 @@ exports.getAllExpense = async (req, res) => {
   }
 };
 
+//Get single expense
+exports.getExpense = async (req, res) => {
+  try {
+    const expense = await Expense.findById(req.params.id);
+    
+    if (!expense) {
+      return res.status(404).json({ success: false, message: "Expense not found" });
+    }
+
+    // Check ownership
+    if (expense.userId.toString() !== req.user.id) {
+      return res.status(403).json({ success: false, message: "Not authorized to access this expense" });
+    }
+
+    return res.status(200).json({ success: true, data: expense });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+//Update expense
+exports.updateExpense = async (req, res) => {
+  try {
+    const expense = await Expense.findById(req.params.id);
+
+    if (!expense) {
+      return res.status(404).json({ success: false, message: "Expense not found" });
+    }
+
+    // Check ownership
+    if (expense.userId.toString() !== req.user.id) {
+      return res.status(403).json({ success: false, message: "Not authorized to update this expense" });
+    }
+
+    const { icon, category, amount, date } = req.body;
+
+    if (icon !== undefined) expense.icon = icon;
+    if (category) expense.category = category;
+    if (amount) expense.amount = amount;
+    if (date) expense.date = new Date(date);
+
+    await expense.save();
+
+    return res.status(200).json({ success: true, data: expense, message: "Expense updated successfully" });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
 //Delete expense source
 exports.deleteExpense = async (req, res) => {
   try {
+    const expense = await Expense.findById(req.params.id);
+
+    if (!expense) {
+      return res.status(404).json({ success: false, message: "Expense not found" });
+    }
+
+    // Check ownership
+    if (expense.userId.toString() !== req.user.id) {
+      return res.status(403).json({ success: false, message: "Not authorized to delete this expense" });
+    }
+
     await Expense.findByIdAndDelete(req.params.id);
-    res.json({ message: "Expense deleted successfully" });
+    res.json({ success: true, message: "Expense deleted successfully" });
   } catch (error) {
-    return res.status(500).json({ message: "Server Error" });
+    return res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
