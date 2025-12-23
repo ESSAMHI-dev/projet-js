@@ -82,22 +82,25 @@ exports.updateUser = async (req, res) => {
   const { fullName, email, password } = req.body;
 
   try {
-    console.log('Update request received:', { fullName, email, hasPassword: !!password });
-    
     const user = await User.findById(req.user.id);
     if (!user) {
       return res.status(404).json({ message: "User not found!" });
     }
     
+    // Check if email is being changed and if it's already taken
+    if (email && email !== user.email) {
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ message: "Email already in use" });
+      }
+      user.email = email;
+    }
+    
     if (fullName) user.fullName = fullName;
-    if (email) user.email = email;
     if (password) user.password = password;
     
     await user.save();
-    
-    console.log('User updated successfully');
 
-    // Return user without password
     const userResponse = await User.findById(req.user.id).select('-password');
     res.status(200).json({ user: userResponse });
   } catch (error) {
