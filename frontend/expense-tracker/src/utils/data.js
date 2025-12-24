@@ -1,4 +1,3 @@
-import { path } from "framer-motion/client";
 import {
   LuLayoutDashboard,
   LuHandCoins,
