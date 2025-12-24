@@ -26,7 +26,4 @@ export const API_PATHS = {
     UPDATE_EXPENSE: (expenseId) => `/api/v1/expense/${expenseId}`,
     DOWNLOAD_EXPENSE: `/api/v1/expense/downloadexcel`,
   },
-  IMAGE: {
-    UPLOAD_IMAGE: `/api/v1/auth/upload-image`,
-  },
 };
