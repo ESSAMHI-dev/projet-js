@@ -1,16 +1,15 @@
-import React from 'react'
 import DashboardLayout from '../../components/layouts/DashboardLayout'
 import { useUserAuth } from '../../hooks/useUserAuth'
 
-const Reports = () => {
+const Factures = () => {
     useUserAuth();
   return (
-    <DashboardLayout activeMenu="Reports">
+    <DashboardLayout activeMenu="Factures">
       <div className="my-5 mx-auto dark:text-white">
-        <div>Reports</div>
+        <div>Factures</div>
       </div>
     </DashboardLayout>
   )
 }
 
-export default Reports
+export default Factures

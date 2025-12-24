@@ -28,9 +28,9 @@ export const SIDE_MENU_DATA = [
   },
   {
     id: "04",
-    label: "Reports",
+    label: "Factures",
     icon: LuBookOpen,
-    path: "/reports",
+    path: "/factures",
   },
   {
     id: "05",
