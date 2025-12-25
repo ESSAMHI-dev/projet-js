@@ -26,4 +26,11 @@ export const API_PATHS = {
     UPDATE_EXPENSE: (expenseId) => `/api/v1/expense/${expenseId}`,
     DOWNLOAD_EXPENSE: `/api/v1/expense/downloadexcel`,
   },
+  FACTURES: {
+    ADD_FACTURE: `/api/v1/factures/add`,
+    GET_ALL_FACTURES: `/api/v1/factures/get`,
+    GET_FACTURE: (factureId) => `/api/v1/factures/${factureId}`,
+    DELETE_FACTURE: (factureId) => `/api/v1/factures/${factureId}`,
+    UPDATE_FACTURE: (factureId) => `/api/v1/factures/${factureId}`,
+  }
 };

@@ -11,7 +11,7 @@ const CustomTooltip = ({ active, payload }) => {
         <p className="text-sm text-gray-600 dark:text-gray-400">
           Amount:{" "}
           <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
-            ${payload[0].value}
+            {payload[0].value} MAD
           </span>
         </p>
       </div>
