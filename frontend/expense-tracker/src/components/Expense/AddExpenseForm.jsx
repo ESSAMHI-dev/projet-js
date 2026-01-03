@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Input from "../Inputs/Input";
 import EmojiPickerPopup from "../EmojiPickerPopup";
+import { useTranslation } from "react-i18next";
 
 const AddExpenseForm = ({ onAddExpense }) => {
+  const { t } = useTranslation();
   const [expense, setExpense] = useState({
     category: "",
     amount: "",
@@ -22,21 +24,21 @@ const AddExpenseForm = ({ onAddExpense }) => {
       <Input
         value={expense.category}
         onChange={({ target }) => handleChange("category", target.value)}
-        label="Category"
-        placeholder="Food, Transport, etc."
+        label={t("category")}
+        placeholder={t("category_placeholder")}
         type="text"
       />
       <Input
         value={expense.amount}
         onChange={({ target }) => handleChange("amount", target.value)}
-        label="Amount"
+        label={t("amount")}
         placeholder=""
         type="number"
       />
       <Input
         value={expense.date}
         onChange={({ target }) => handleChange("date", target.value)}
-        label="Date"
+        label={t("date")}
         placeholder=""
         type="date"
       />
@@ -47,7 +49,7 @@ const AddExpenseForm = ({ onAddExpense }) => {
           className="add-btn add-btn-fill"
           onClick={() => onAddExpense(expense)}
         > 
-          Add Expense
+          {t("add_expense")}
         </button>
       </div>
     </div>

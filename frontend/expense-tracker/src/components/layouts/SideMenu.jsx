@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { SIDE_MENU_DATA } from "../../utils/data";
 import { UserContext } from "../../context/UserContext";
 import CharAvatar from "../Cards/CharAvatar";
+import { useTranslation } from "react-i18next";
 
 const SideMenu = ({ activeMenu }) => {
+  const { t } = useTranslation();
   const { user, clearUser } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -50,7 +52,7 @@ const SideMenu = ({ activeMenu }) => {
           onClick={() => handleClick(item.path)}
         >
           <item.icon className="text-xl" />
-          {item.label}
+          {t(item.label)}
         </button>
       ))}
     </div>

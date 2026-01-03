@@ -2,15 +2,17 @@ import React from "react";
 import { LuArrowRight } from "react-icons/lu";
 import moment from "moment";
 import TransactionInfoCard from "../Cards/TransactionInfoCard";
+import { useTranslation } from "react-i18next";
 
 const RecentTransactions = ({ transactions, onSeeMore }) => {
+  const { t } = useTranslation();
   return (
     <div className="card">
       <div className="flex items-center justify-between">
-        <h5 className="text-lg dark:text-gray-100">Recent Transactions</h5>
+        <h5 className="text-lg dark:text-gray-100">{t("recent_transactions")}</h5>
 
         <button className="card-btn" onClick={onSeeMore}>
-          See More <LuArrowRight className="text-base" />
+          {t("see_more")} <LuArrowRight className="text-base" />
         </button>
       </div>
 

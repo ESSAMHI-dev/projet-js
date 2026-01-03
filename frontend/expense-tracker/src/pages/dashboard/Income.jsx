@@ -10,8 +10,10 @@ import toast from "react-hot-toast";
 import IncomeList from "../../components/Income/IncomeList";
 import DeleteAlert from "../../components/DeleteAlert";
 import UpdateIncomeForm from "../../components/Income/UpdateIncomeForm";
+import { useTranslation } from "react-i18next";
 
 const Income = () => {
+  const { t } = useTranslation();
   useUserAuth();
 
   const [incomeData, setIncomeData] = useState([]);
@@ -50,15 +52,15 @@ const Income = () => {
 
     //Validation Checks
     if (!source.trim()) {
-      toast.error("Please enter income source");
+      toast.error(t("enter_income_source"));
       return;
     }
     if (!amount || isNaN(amount) || Number(amount) <= 0) {
-      toast.error("Please enter a valid amount");
+      toast.error(t("enter_valid_amount"));
       return;
     }
     if (!date) {
-      toast.error("Please select a date");
+      toast.error(t("select_date"));
       return;
     }
 
@@ -71,11 +73,11 @@ const Income = () => {
       });
 
       setOpenAddIncomeModal(false);
-      toast.success("Income added successfully");
+      toast.success(t("income_added"));
       fetchIncomeDetails();
     } catch (error) {
       console.error("Error adding income:", error);
-      toast.error("Failed to add income. Please try again.");
+      toast.error(t("failed_add_income"));
     }
   };
 
@@ -85,11 +87,11 @@ const Income = () => {
       await axiosInstance.delete(`${API_PATHS.INCOME.DELETE_INCOME(id)}`);
 
       setOpenDeleteAlert({ show: false, data: null });
-      toast.success("Income deleted successfully");
+      toast.success(t("income_deleted"));
       fetchIncomeDetails();
     } catch (error) {
       console.error("Error deleting income:", error);
-      toast.error("Failed to delete income. Please try again.");
+      toast.error(t("failed_delete_income"));
     }
   };
 
@@ -104,10 +106,10 @@ const Income = () => {
         icon,
       });
       setOpenUpdateIncomeModal(false);
-      toast.success("Income updated successfully");
+      toast.success(t("income_updated"));
       fetchIncomeDetails();
     } catch (error) {
-      toast.error("Failed to update income. Please try again.");
+      toast.error(t("failed_update_income"));
       console.error("Error updating income:", error);
     }
   }

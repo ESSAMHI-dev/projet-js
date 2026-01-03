@@ -10,8 +10,10 @@ import Modal from "../../components/Modal";
 import ExpenseList from "../../components/Expense/ExpenseList";
 import DeleteAlert from "../../components/DeleteAlert";
 import UpdateExpenseForm from "../../components/Expense/UpdateExpenseForm";
+import { useTranslation } from "react-i18next";
 
 const Expense = () => {
+  const { t } = useTranslation();
   useUserAuth();
 
   const [expenseData, setExpenseData] = useState([]);
@@ -51,15 +53,15 @@ const Expense = () => {
 
     //Validation Checks
     if (!category.trim()) {
-      toast.error("Please enter expense category");
+      toast.error(t("enter_category"));
       return;
     }
     if (!amount || isNaN(amount) || Number(amount) <= 0) {
-      toast.error("Please enter a valid amount");
+      toast.error(t("enter_valid_amount"));
       return;
     }
     if (!date) {
-      toast.error("Please select a date");
+      toast.error(t("select_date"));
       return;
     }
 
@@ -72,11 +74,11 @@ const Expense = () => {
       });
 
       setOpenAddExpenseModal(false);
-      toast.success("Expense added successfully");
+      toast.success(t("expense_added"));
       fetchExpenseDetails();
     } catch (error) {
       console.error("Error adding expense:", error);
-      toast.error("Failed to add expense. Please try again.");
+      toast.error(t("failed_add_expense"));
     }
   };
 
@@ -86,11 +88,11 @@ const Expense = () => {
       await axiosInstance.delete(`${API_PATHS.EXPENSE.DELETE_EXPENSE(id)}`);
 
       setOpenDeleteAlert({ show: false, data: null });
-      toast.success("Expense deleted successfully");
+      toast.success(t("expense_deleted"));
       fetchExpenseDetails();
     } catch (error) {
       console.error("Error deleting expense:", error);
-      toast.error("Failed to delete expense. Please try again.");
+      toast.error(t("failed_delete_expense"));
     }
   };
 
@@ -105,11 +107,11 @@ const Expense = () => {
         icon,
       });
       setOpenUpdateExpenseModal(false);
-      toast.success("Expense updated successfully");
+      toast.success(t("expense_updated"));
       fetchExpenseDetails();
     } catch (error) {
       console.error("Error updating expense:", error);
-      toast.error("Failed to update expense. Please try again.");
+      toast.error(t("failed_update_expense"));
     }
   };
 
@@ -173,7 +175,7 @@ const Expense = () => {
         <Modal
           isOpen={openAddExpenseModal}
           onClose={() => setOpenAddExpenseModal(false)}
-          title="Add Expense"
+          title={t("add_expense")}
         >
           <AddExpenseForm onAddExpense={handleAddExpense} />
         </Modal>
@@ -181,14 +183,14 @@ const Expense = () => {
         <Modal
           isOpen={openUpdateExpenseModal}
           onClose={() => setOpenUpdateExpenseModal(false)}
-          title="Update Expense"
+          title={t("update") + " " + t("expense")}
         >
           <UpdateExpenseForm onUpdate={handleUpdateExpense} expense={selectedExpense} />
         </Modal>
 
         <Modal
           isOpen={openDeleteAlert.show}
-          title="Delete Expense"
+          title={t("delete") + " " + t("expense")}
           onClose={() => setOpenDeleteAlert({ show: false, data: null })}
         >
           <DeleteAlert
