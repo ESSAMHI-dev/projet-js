@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require ("../models/User");
-// the logic to follow is check for token , then validate it then attach userDaata and continue
+// the logic to follow is check for token , then validate it then attach user Daata and continue
 exports.protect = async(req, res, next) => {
     let token = req.headers.authorization?.split(" ")[1]; // to extract the token from Bearer token
     if(!token){

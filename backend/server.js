@@ -1,5 +1,5 @@
 require("dotenv").config();
-const express = require("express");
+const express = require("express"); //for building api server
 const cors = require("cors");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
@@ -13,7 +13,7 @@ const app = express();
 
 //Middleware to handle cors
 app.use(cors({
-    origin: process.env.CLIENT_URL || "*",
+    origin: process.env.CLIENT_URL || "*", //whitelist my client URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
